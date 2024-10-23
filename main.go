@@ -137,7 +137,32 @@ func processExpression(n1, d1 int, operator string, n2, d2 int) (int, int, int, 
 	simplifiedNumerator, simplifiedDenominator := simplifyFraction(numerator, denominator)
 	return numerator, denominator, simplifiedNumerator, simplifiedDenominator
 }
+func romanToInt(s string) int {
+	romanValues := map[byte]int{
+	'I': 1, 'V': 5, 'X': 10, 'L': 50,
+	'C': 100, 'D': 500, 'M': 1000,
+}
 
+total := 0
+prevValue := 0
+
+// Percorre a string de trás para frente
+for i := len(s) - 1; i >= 0; i-- {
+	currentValue := romanValues[s[i]]
+
+	// Se o valor atual for menor que o anterior, subtraímos
+	if currentValue < prevValue {
+		total -= currentValue
+	} else {
+		total += currentValue
+	}
+
+	// Atualiza o valor anterior
+	prevValue = currentValue
+}
+
+return total
+}
 func main() {
 	var nCases int
 	f.Scan(&nCases)
